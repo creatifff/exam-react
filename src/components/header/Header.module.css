@@ -1,0 +1,29 @@
+.header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 25px 0;
+}
+
+.logo {
+    display: flex;
+    flex-direction: column;
+}
+
+.logo__name {
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.logo__short {
+    color: #909090;
+}
+
+.nav {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 15px;
+    color: #909090;
+}
