@@ -21,9 +21,17 @@
 }
 
 .nav {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 15px;
     color: #909090;
+    font-size: 18px;
 }
+
+@media screen and (max-width: 476px) {
+    .logo__name {
+      font-size: 20px;
+    }
+
+    .logo__short {
+        font-size: 14px;
+    }
+    
+  }

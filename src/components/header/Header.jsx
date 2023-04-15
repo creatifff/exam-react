@@ -8,15 +8,12 @@ const Header = () => {
         <header className={styles.header}>
           <NavLink to="/">
             <div className={styles.logo}>
-              <h1 className={styles.logo__name}>WeAreBuilding</h1>
-              <p className={styles.logo__short}>Есть идея - есть WeAreBuilding</p>
+              <h1 className={styles.logo__name}>Flowers Store</h1>
+              <p className={styles.logo__short}>Покажи свою любовь</p>
             </div>
           </NavLink>
           <nav className={styles.nav}>
-            <NavLink>Главная</NavLink>
-            <NavLink>Каталог</NavLink>
-            <NavLink>Отзывы</NavLink>
-            <NavLink>О компании</NavLink>
+            <NavLink><i class="fa-solid fa-cart-shopping"></i></NavLink>
           </nav>
         </header>
       </div>

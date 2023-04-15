@@ -9,11 +9,6 @@ footer {
     grid-template-columns: repeat(3, 1fr);
 }
 
-.footer__column:nth-child(1) {
-    justify-content: center;
-    display: flex;
-    flex-direction: column;
-}
 
 .footer__nav {
     display: flex;
@@ -22,7 +17,7 @@ footer {
     gap: 15px;
 }
 
-.footer__column:nth-child(2) {
+.footer__column:nth-child(1) {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -31,7 +26,7 @@ footer {
     text-align: center;
 }
 
-.footer__column:nth-child(3) {
+.footer__column:nth-child(2) {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -43,3 +38,28 @@ footer {
 .logo_name {
     font-size: 20px;
 }
+
+@media screen and (max-width: 476px) {
+    .logo__name {
+      font-size: 20px;
+    }
+
+    .logo__short {
+        font-size: 14px;
+    }
+
+    .footer__inner {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+
+    }
+
+    .footer__column:nth-child(2) {
+        display: flex;
+        flex-direction: row;
+        font-size: 25px;
+        gap: 10px;
+    }
+
+  }

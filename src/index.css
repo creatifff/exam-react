@@ -1,6 +1,6 @@
 body {
   font-size: 15px;
-  background-color: #fcf9db;
+  background-color: #ffd5d5;
   font-family: 'Inter', sans-serif;
 }
 
@@ -24,8 +24,6 @@ a {
 }
 
 img {
-  max-width: 400px;
-  max-height: 400px;
   width: 100%;
   object-fit: cover;
 }
@@ -43,6 +41,10 @@ img {
   background-color: #eaeaea;
 }
 
+main {
+  padding: 30px 0;
+}
+
 .container {
   max-width: 1240px;
   width: 100%;
@@ -52,6 +54,94 @@ img {
 
 .items {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 15px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+
+.single__img {
+  max-width: 400px;
+  object-fit: cover;
+}
+
+.single__page {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.single__info {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;;
+}
+
+.button {
+  background-color: #9b2e2e;
+  color: #fff;
+  width: fit-content;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.price {
+  font-weight: 700;
+}
+
+.text {
+  font-weight: 400;
+}
+
+.quantity {
+  color: #5e5e5e;
+}
+
+.btnprice {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+button {
+  padding: 10px;
+  background-color: #d67a7a;
+  border: none;
+  border-radius: 5px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+}
+
+
+
+@media screen and (max-width: 476px) {
+  .single__page {
+    flex-direction: column;
+    display: flex;
+    gap: 20px;
+  }
+
+  .container {
+    padding: 0 20px;
+  }
+
+  .layout {
+    max-width: 90vw;
+    margin-top: 30px;
+  }
+
+  .items {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
 }

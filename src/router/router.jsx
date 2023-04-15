@@ -3,6 +3,7 @@ import HomePage from "../pages/HomePage";
 import Root from "../pages/Root";
 import SinglePage from "../pages/SinglePage";
 
+
 const router = createBrowserRouter([
     {
         path: '/',

@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { NavLink} from "react-router-dom";
-
+import { NavLink } from "react-router-dom";
 
 const HomePage = () => {
   // Стейт массива услуг
   const [items, setItems] = useState([]);
-  
+
   // копия массива items для сброса к дефолту
   const [initialItems, setInitialItems] = useState([]);
 
@@ -21,15 +20,15 @@ const HomePage = () => {
   const onChangeQuery = (e) => {
     setQuery(e.target.value);
   };
-  
 
   // Хранение данных в форме
   // По умолчанию пустые строки и первая услуга
   const [form, setForm] = useState({
-    email: "",
-    fullname: "",
+    full_name: "",
+    address: "",
     message: "",
-    service_id: 1, // must take id from onChangeSelect fn
+    product_id: 1,
+    email: "",
   });
 
   // Обработчик формы
@@ -54,7 +53,7 @@ const HomePage = () => {
 
       // Ссылается на поле (input) и записываем новое значение из массива select
       prevState[event.target.name] =
-      event.target.options[event.target.selectedIndex].value;
+        event.target.options[event.target.selectedIndex].value;
 
       // Возвращает новый данные в объект
       return prevState;
@@ -66,7 +65,7 @@ const HomePage = () => {
     // Отмена перезагрузки страницы после отправки
     event.preventDefault();
 
-    fetch("https://exam.avavion.ru/api/requests/create", {
+    fetch("https://flowers.avavion.ru/api/applications/create", {
       method: "POST",
       body: JSON.stringify(form),
       headers: {
@@ -75,16 +74,16 @@ const HomePage = () => {
       },
     })
       .then((r) => r.json())
-      .then((data) => console.log(data));
+      .then(alert('Заявка отправлена'));
   };
 
   // Получение предметов с API через fetch (GET)
   useEffect(() => {
-    fetch("https://api.avavion.ru/api/products")
+    fetch("https://flowers.avavion.ru/api/products")
       .then((response) => response.json()) // преобразование в json формат для чтения
       .then((data) => {
-        setItems(data.data) // запись в основной массив
-        setInitialItems(data.data) // запись в копию массива для сброса
+        setItems(data.data); // запись в основной массив
+        setInitialItems(data.data); // запись в копию массива для сброса
       }); // запись в массив всех предметов
   }, []);
 
@@ -93,7 +92,7 @@ const HomePage = () => {
     // Копируем массив товаров
     const sortedItems = [...items];
     // Сортируем услугами по возрастанию цены
-    sortedItems.sort((a, b) => a.price > b.price ? 1 : -1); 
+    sortedItems.sort((a, b) => (a.price > b.price ? 1 : -1));
     // Обновляем состояние, чтобы перерендерить компонент со вновь отсортированными услугами
     setItems(sortedItems);
   };
@@ -103,15 +102,15 @@ const HomePage = () => {
     // Копируем массив услуг
     const sortedItems = [...items];
     // Сортируем услуги по возрастанию цены
-    sortedItems.sort((a, b) => a.price < b.price ? 1 : -1);
+    sortedItems.sort((a, b) => (a.price < b.price ? 1 : -1));
     // Обновляем состояние, чтобы перерендерить компонент со вновь отсортированными услугами
     setItems(sortedItems);
   };
-  
+
   // кнопка для сброса сортировки
   const resetSort = () => {
     setItems(initialItems);
-  }
+  };
 
   // фильтрация по тегу
   const filterByTag = (tag) => {
@@ -122,7 +121,7 @@ const HomePage = () => {
   // сброс фильтра
   const filterByDefault = () => {
     setItems(initialItems);
-  }
+  };
 
   return (
     <div className="container">
@@ -130,25 +129,28 @@ const HomePage = () => {
         <form>
           <input
             onChange={(e) => onChangeForm(e)}
-            type="email"
-            name="email"
-            placeholder="E-mail"
+            type="text"
+            name="full_name"
+            placeholder="Ваше полное имя*"
           />
           <input
             onChange={(e) => onChangeForm(e)}
             type="text"
-            name="full_name"
-            placeholder="Your fullname"
+            name="address"
+            placeholder="Адрес доставки"
           />
           <textarea
             onChange={(e) => onChangeForm(e)}
             name="message"
-            placeholder="enter a message"
+            placeholder="Комментарий (минимум 10 символов)"
           ></textarea>
-          <select 
-            onChange={onChangeSelect.bind(this)}
-            name="service_id"
-          >
+          <input
+            onChange={(e) => onChangeForm(e)}
+            type="email"
+            name="email"
+            placeholder="E-mail"
+          />
+          <select onChange={onChangeSelect.bind(this)} name="product_id">
             {items.map((item) => {
               return (
                 <option key={item.id} value={item.id}>
@@ -156,57 +158,72 @@ const HomePage = () => {
                 </option>
               );
             })}
-            
           </select>
-          <button onClick={(e) => send(e)}>Send</button>
+          <button onClick={(e) => send(e)}>Отправить</button>
         </form>
       </div>
 
       {/* Поиск */}
       <input
-        type="text"
-        placeholder="search"
+        type="search"
+        placeholder="Поиск"
         value={query}
-        // если в инпут вводится запрос, идет поиск
         onChange={onChangeQuery.bind(this)}
       />
 
       {/* Сортировка */}
       <button onClick={sortByPriceIncrease}>По возрастанию цены</button>
       <button onClick={sortByPriceDecrease}>По убыванию цены</button>
-      <button onClick={resetSort}>Сбросить сортировку</button>
+      <button onClick={resetSort}>Не сортировать</button>
 
+      
 
       {/* Фильтрация */}
       <div>
-        <button onClick={() => filterByTag("Ковры")}>Ковры</button>
-        <button onClick={() => filterByTag("Освещение")}>Освещение</button>
-        <button onClick={() => filterByTag("Хранение")}>Хранение</button>
-        <button onClick={() => filterByTag("Кухни")}>Кухни</button>
+        <button onClick={() => filterByTag("Букеты")}>Букеты</button>
+        <button onClick={() => filterByTag("Цветы")}>Цветы</button>
+        <button onClick={() => filterByTag("Подарочная упаковка")}>
+          Подарочная упаковка
+        </button>
+        <button onClick={() => filterByTag("Пасха")}>Пасха</button>
+        <button onClick={() => filterByTag("Букеты из конфет")}>
+          Букеты из конфет
+        </button>
+        <button onClick={() => filterByTag("14 февраля")}>14 февраля</button>
+        <button onClick={() => filterByTag("8 марта")}>8 марта</button>
+        <button onClick={() => filterByTag("Букеты из фруктов")}>
+          Букеты из фруктов
+        </button>
+        <button onClick={() => filterByTag("Цветы в корзине")}>
+          Цветы в корзине
+        </button>
+        <button onClick={() => filterByTag("Мужские букеты")}>
+          Мужские букеты
+        </button>
         <button onClick={filterByDefault}>Все</button>
       </div>
-
-      
 
       {/* Вывод предметов из useState массива */}
       {/* Перебор через метод map */}
       {/* Итерируем по одному item */}
       <div className="items">
         {/* Если по запросу находится услуга, то выводится она */}
-        {foundItems.length ? foundItems.map((item) => {
-          return (
-            <NavLink to={`/products/${item.id}`}>
-            <div key={item.id} className="item">
-              <img src={item.image_url} alt={item.name} />
-              <h2>{item.name}</h2>
-              <p>{item.short_text}</p>
-              <span>{item.price} руб.</span>
-              <p>{item.tag}</p>
-              
-            </div>
-            </NavLink>
-          ); // если не найдена, вывод сообщения
-        }) : <h3>По запросу "{query}" ничего не найдено</h3>}
+        {foundItems.length ? (
+          foundItems.map((item) => {
+            return (
+              <div key={item.id} className="item">
+                <NavLink to={`/products/${item.id}`}>
+                  <img src={item.preview_image} alt={item.name} />
+                </NavLink>
+                <h2>{item.name}</h2>
+                <span>{item.price} руб.</span>
+                <p>{item.tag}</p>
+              </div>
+            );
+          })
+        ) : (
+          <h3>По запросу "{query}" ничего не найдено</h3>
+        )}
       </div>
     </div>
   );
